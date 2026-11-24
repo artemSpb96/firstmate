@@ -1,0 +1,11 @@
+code_root=/tmp/fmtest.3trjmv/base session=fm-lab-leader-base-48519-19089 mode=plain
+server_ensure_rc=0 elapsed_s=0
+status.server.running=true
+status.server.capabilities.detached_server_daemon=false
+server_pid=48589
+getsid(server)=48105 getpgid(server)=48105 session_leader=False
+ps: 48589 48587 herdr server --session fm-lab-leader-base-48519-19089
+server_env_FM_HOME=absent
+server_env_CLAUDECODE=absent
+server_env_HERDR_SESSION=fm-lab-leader-base-48519-19089
+teardown=ok session=fm-lab-leader-base-48519-19089

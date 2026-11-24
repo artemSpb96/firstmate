@@ -1,0 +1,7 @@
+## 1b. Under a pty with real job control (script + bash -m), a launched job leads its own process group, so a bare setsid() is refused:
+^Dperl pid=61563 pgrp=61563 group_leader=yes
+bare POSIX::setsid() => ok
+
+## 2b. fm_backend_herdr_session_leader under that same real job control (perl must fork first):
+^Dchild pid=61573 getsid=61573 session_leader=True
+launcher_rc=0

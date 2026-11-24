@@ -1,0 +1,11 @@
+code_root={run-worktree} session=fm-lab-leader-fix-48109-23844 mode=plain
+server_ensure_rc=0 elapsed_s=0
+status.server.running=true
+status.server.capabilities.detached_server_daemon=true
+server_pid=48184
+getsid(server)=48184 getpgid(server)=48184 session_leader=True
+ps: 48184 48181 herdr server --session fm-lab-leader-fix-48109-23844
+server_env_FM_HOME=absent
+server_env_CLAUDECODE=absent
+server_env_HERDR_SESSION=fm-lab-leader-fix-48109-23844
+teardown=ok session=fm-lab-leader-fix-48109-23844

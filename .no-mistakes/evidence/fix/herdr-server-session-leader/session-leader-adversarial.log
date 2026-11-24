@@ -1,0 +1,25 @@
+## 1. Under job control (bash -m) a launched job leads its own process group, so a bare setsid() would be refused:
+perl pid=56993 pgrp=56986 group_leader=no
+bare POSIX::setsid() => ok
+
+## 2. fm_backend_herdr_session_leader under the same job control (perl fork branch), PATH without setsid:
+setsid(1) absent on this host -> perl POSIX::setsid fallback
+child pid=57019 getsid=57019 session_leader=True
+launcher_rc=0
+
+## 3. Full fm_backend_herdr_server_ensure invoked with job control enabled (set -m) in a lab session:
+code_root={run-worktree} session=fm-lab-leader-jobctl-57629-3946 mode=jobcontrol
+server_ensure_rc=0 elapsed_s=0
+status.server.running=true
+status.server.capabilities.detached_server_daemon=true
+server_pid=57749
+getsid(server)=57749 getpgid(server)=57749 session_leader=True
+ps: 57749 57745 herdr server --session fm-lab-leader-jobctl-57629-3946
+server_env_FM_HOME=absent
+server_env_CLAUDECODE=absent
+server_env_HERDR_SESSION=fm-lab-leader-jobctl-57629-3946
+teardown=ok session=fm-lab-leader-jobctl-57629-3946
+
+## 4. Fallback when neither setsid nor perl resolves: the command still runs (in the caller's session):
+ran: pid=58476 session_leader=False
+launcher_rc=0
