@@ -1,0 +1,36 @@
+== platform: Darwin; setsid(1): absent; perl: /usr/bin/perl
+== A. fixed fm_backend_herdr_server_ensure (product path, perl POSIX::setsid fallback)
+server_ensure rc=0
+fm-lab-fix-67621: running=true detached_server_daemon=true server_pid=67707 ps=[67707 67704 67707 Ss herdr server --session fm-lab-fix-67621]
+== B. adversarial: caller is a process-group leader (set -m), fixed fm_backend_herdr_session_leader
+probe: a set -m foreground child leads its process group: yes
+session_leader returned rc=0
+fm-lab-grp-67621: running=true detached_server_daemon=true server_pid=67839 ps=[67839 1 67839 Ss herdr server --session fm-lab-grp-67621]
+== C. base commit 351432a3 fm_backend_herdr_server_ensure (pre-fix launch)
+server_ensure rc=0
+fm-lab-old-67621: running=true detached_server_daemon=false server_pid=67916 ps=[67916 67914 67620 S herdr server --session fm-lab-old-67621]
+== D. fm-remote-doctor.sh (check mode, disposable HOME) against each real server
+-- doctor against fm-lab-old-67621
+platform=darwin
+check herdr=ok: /var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/wrap/herdr
+check herdr-detached=note: session fm-remote's server does not lead its own session (detached_server_daemon=false), so herdr machine add refuses this host as a saved SSH machine; second-mate readiness is unaffected
+check herdr-server=human: session fm-remote is running but its Firstmate code-root owner cannot be proven; leaving the legacy service untouched
+action: herdr-detached: none for second mates; launchd keeps the Aqua launch agent's server in its own session, and a live handoff would move the server out of that job, so Firstmate offers no repair here
+action: herdr-server: identify the code root that owns this Herdr service before attempting a repair
+gap lines (fixable/human): 6
+herdr-detached gap lines: 0
+doctor rc=1
+-- doctor against fm-lab-fix-67621
+platform=darwin
+check herdr=ok: /var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/wrap/herdr
+check herdr-server=human: session fm-remote is running but its Firstmate code-root owner cannot be proven; leaving the legacy service untouched
+action: herdr-server: identify the code root that owns this Herdr service before attempting a repair
+gap lines (fixable/human): 6
+herdr-detached gap lines: 0
+doctor rc=1
+server lifecycle calls the doctor attempted (refused by wrapper): 0
+fm-lab-old-67621: running=true detached_server_daemon=false server_pid=67916 ps=[67916 67914 67620 S herdr server --session fm-lab-old-67621]
+teardown fm-lab-fix-67621 ok
+teardown fm-lab-grp-67621 ok
+teardown fm-lab-old-67621 ok
+driver exit=0

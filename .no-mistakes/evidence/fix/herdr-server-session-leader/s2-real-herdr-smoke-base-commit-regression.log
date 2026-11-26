@@ -1,0 +1,5 @@
+ok - real herdr: version_check accepts the installed binary's protocol
+ok - real herdr: container_ensure starts the isolated session's server, creates the firstmate workspace (fm-lab-backend-smoke-60559:w1), and reports its seeded default tab id (w1:t1)
+not ok - real herdr: the server Firstmate started reports detached_server_daemon=false, so herdr machine add would refuse it
+fm-herdr-lab: missing fleet-state tripwire for 'fm-lab-backend-smoke-60559'; refusing destructive calls
+exit=1

@@ -1,0 +1,14 @@
+pre-fix server: {"running":true,"detached":false,"socket":"~/.config/herdr/sessions/fm-lab-lnx-73089/herdr.sock"}
+-- doctor (check mode, platform override Linux) against fm-lab-lnx-73089
+platform=linux
+check herdr=ok: /var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/wrap/herdr
+check herdr-detached=note: session fm-remote's server does not lead its own session (detached_server_daemon=false), so herdr machine add refuses this host as a saved SSH machine; second-mate readiness is unaffected
+check herdr-server=human: session fm-remote is running but its Firstmate code-root owner cannot be proven; leaving the legacy service untouched
+action: herdr-detached: only to save this host in herdr, replace the server by live handoff, which keeps every pane but briefly interrupts herdr clients and is experimental in herdr, never by a stop: touch '~/.config/herdr/sessions/fm-lab-lnx-73089/firstmate-server-replacing' && herdr --session fm-remote server live-handoff; rm -f '~/.config/herdr/sessions/fm-lab-lnx-73089/firstmate-server-replacing'
+action: herdr-server: identify the code root that owns this Herdr service before attempting a repair
+herdr-detached gap lines: 0
+doctor rc=1 (gap lines: check remote-job-worker check remote-job-probe check herdr-server )
+server lifecycle calls the doctor attempted: 0
+server after doctor: {"running":true}
+teardown fm-lab-lnx-73089 ok
+driver exit=0

@@ -1,0 +1,31 @@
+mode=check
+path=/var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/wrap:~/.local/bin:~/.opencode/bin:~/.antigravity-ide/antigravity-ide/bin:~/bin:~/.config/newbius/bin/npc:~/.local/bin:~/.config/newbius/bin:~/.local/bin:~/.local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/usr/local/go/bin:/opt/homebrew/bin:~/.local/bin:~/go/bin:~/.cargo/bin:~/bin:/opt/homebrew/sbin:/usr/local/sbin:~/.orbstack/bin
+entrypoint=no
+note: not launched through the fixed remote entrypoint; the reported PATH is this caller environment.
+platform=darwin
+required git=/usr/bin/git
+required jq=/usr/bin/jq
+required herdr=/var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/wrap/herdr
+required tasks-axi=~/.local/bin/tasks-axi
+required treehouse=~/.local/bin/treehouse
+required harness=claude:~/.local/bin/claude
+optional tmux=/opt/homebrew/bin/tmux
+optional no-mistakes=~/.local/bin/no-mistakes
+optional gh=/opt/homebrew/bin/gh
+check herdr=ok: /var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/wrap/herdr
+check gui-session=ok: gui/501
+check remote-job-worker=fixable: /var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/home.n0qZ/Library/LaunchAgents/dev.firstmate.remote-job.plist does not match the Firstmate-owned Aqua worker contract
+check remote-job-worker-loaded=fixable: dev.firstmate.remote-job is not loaded in gui/501
+check remote-job-probe=fixable: the remote job worker has not reported a fresh probe
+check launchagent=human: no launch agent at /var/folders/1v/16pjzdj162v682g5jv6ngqg00000gn/T//fm-drv.2IH3Su/home.n0qZ/Library/LaunchAgents/dev.firstmate.herdr.fm-remote.plist; cannot claim or reload session fm-remote because service owner is unknown or belongs to another code root (owner: unknown)
+check launchagent-scope=skip: no launch agent is installed yet
+check launchagent-loaded=human: cannot load dev.firstmate.herdr.fm-remote because service owner is unknown or belongs to another code root (owner: unknown)
+check herdr-server=human: session fm-remote is running but its Firstmate code-root owner cannot be proven; leaving the legacy service untouched
+check entrypoint-link=skip: this run did not come through the fixed remote entrypoint
+action: remote-job-worker: rerun this command with --fix to write dev.firstmate.remote-job
+action: remote-job-worker-loaded: rerun this command with --fix to bootstrap the worker
+action: remote-job-probe: rerun this command with --fix to restart the worker, then rerun through fm-on.sh
+action: launchagent: resolve ownership or wait until session fm-remote has no panes, then rerun this command with --fix
+action: launchagent-loaded: resolve ownership or wait until session fm-remote has no panes, then rerun this command with --fix
+action: herdr-server: identify the code root that owns this Herdr service before attempting a repair
+error: this host is not ready for a remote second mate; unresolved: remote-job-worker remote-job-worker-loaded remote-job-probe launchagent launchagent-loaded herdr-server
